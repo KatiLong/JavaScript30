@@ -58,7 +58,39 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+  function playSounds (event) {
+    // const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const currentAudio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    const currentDiv = document.querySelector(`div[data-key="${event.keyCode}"]`);
+    if (!currentAudio) return;
 
+    // highlightButton(currentDiv, currentAudio);
+    currentDiv.classList.add('playing');
+    currentAudio.currentTime = 0;
+    currentAudio.play();
+    
+  }
+  // function highlightButton (div, audio) {
+  //   // CSS style changed here
+  //   console.log("button highlighted", audio);
+  //   div.classList.add('playing');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach( key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSounds);
+  
+  //Document ready IIFE
+  // (()=>{
+  //   console.log('Document Ready Function');
+  //   playSounds();
+  // })();
 </script>
 
 
